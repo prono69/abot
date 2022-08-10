@@ -20,6 +20,7 @@ class User(Client):
             workers=4
         )
         self.LOGGER = LOGGER
+        self.storage.session_string=Config.TG_USER_SESSION
 
     async def start(self):
         await super().start()
