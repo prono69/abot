@@ -32,7 +32,7 @@ class Bot(Client):
             workers=50,
             plugins={
                 "root": "plugins"
-            }
+            },
             sleep_threshold=5,
         )
         self.LOGGER = LOGGER
