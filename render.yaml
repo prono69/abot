@@ -3,7 +3,7 @@ services:
   - type: web
     name: Abot
     env: python
-    startCommand: python3 bot.py
+    startCommand: python3 main.py
     buildCommand: pip3 install -U -r requirements.txt
     repo: https://github.com/prono69/abot.git # optional
     region: oregon # optional (defaults to oregon)
