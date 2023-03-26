@@ -1,18 +1,14 @@
-FROM python:latest
+FROM python:3.8-slim-buster
 RUN apt update && apt upgrade -y
 RUN apt install git pip curl python3-pip -y
+COPY requirements.txt /requirements.txt
 
-ENV LANG en_US.UTF-8
-ENV LC_ALL en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV TZ=Asia/Kolkata DEBIAN_FRONTEND=noninteractive
-
-WORKDIR /usr/src/app
-COPY . .
-RUN chmod 777 /usr/src/app
-
-RUN pip3 install --upgrade pip setuptools wheel
-RUN pip3 install -r requirements.txt
+RUN cd /
+RUN pip3 install -U pip && pip3 install -U -r requirements.txt
+RUN pip3 install --upgrade setuptools wheel
 RUN apt-get -qq purge git && apt-get -y autoremove && apt-get -y autoclean
+RUN mkdir /abot
+WORKDIR /abot
+COPY start.sh /start.sh
+CMD ["/bin/bash", "/start.sh"]
 
-CMD ["bash", "start.sh"]

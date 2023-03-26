@@ -61,5 +61,3 @@ class Bot(Client):
         self.LOGGER(__name__).info("Bot stopped. Bye.")
 
         
-app = Bot()
-app.run()
