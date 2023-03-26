@@ -25,15 +25,15 @@ class Bot(Client):
     def __init__(self):
         super().__init__(
             name="bot_session",
-            in_memory=True,
-            api_hash=Config.API_HASH,
+            # in_memory=True,
             api_id=Config.APP_ID,
+            api_hash=Config.API_HASH,
             bot_token=Config.TG_BOT_TOKEN,
-            sleep_threshold=30,
-            workers=8,
+            workers=50,
             plugins={
                 "root": "plugins"
             }
+            sleep_threshold=5,
         )
         self.LOGGER = LOGGER
 
