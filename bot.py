@@ -5,6 +5,8 @@ from user import User
 from pyrogram import Client
 from presets import Presets as Msg
 from pyrogram.enums import ParseMode
+from aiohttp import web
+from plugins import web_server
 
 
 if bool(os.environ.get("ENV", False)):
@@ -14,6 +16,7 @@ else:
     from config import Config
     from config import LOGGER
 
+PORT = "8080"
 
 class Bot(Client):
     USER: User = None
@@ -43,6 +46,10 @@ class Bot(Client):
             f"@{usr_bot_me.username}  started! "
         )
         self.USER, self.USER_ID = await User().start()
+        app = web.AppRunner(await web_server())
+        await app.setup()
+        bind_address = "0.0.0.0"
+        await web.TCPSite(app, bind_address, PORT).start()
         try:
             await self.USER.send_message(usr_bot_me.username, "%session_start%")
         except Exception:
@@ -52,3 +59,7 @@ class Bot(Client):
     async def stop(self, *args):
         await super().stop()
         self.LOGGER(__name__).info("Bot stopped. Bye.")
+
+        
+app = Bot()
+app.run()
